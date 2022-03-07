@@ -1,0 +1,54 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% load widget_tweaks %}
+{% block main-content %}
+
+
+
+<section>
+  <div class="container my-5" style="padding-top: 100px;">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <center><h3>Log in Form</h3></center>
+        <br>
+        <div class="card shadow p-3" style="background-color: #014E88;">
+          <div class="card-header text-black">
+            <center><img src="{% static 'images/nav/logo.png' %}" alt="" style="width: 250px;"></center>
+          </div>
+          <div class="card-body" style="color: white;">
+            <form action="{% url 'login' %}" method="POST" novalidate>
+              {% if messages %}
+              {% for message in messages %}
+              <p {% if message.tags %} class="alert alert-{{message.tags}}
+            mb-5 {% endif %}">{{message}}</p>
+              {% endfor %}
+              {% endif %}
+              {% csrf_token %}
+              {% for field in form.visible_fields %}
+              <div class="form-group">
+                {{ field.label_tag }}
+                {% render_field field class="form-control" %}
+                {% for error in field.errors %}
+                <span style="color:red">{{ error }}</span>
+                {% endfor %}
+                {% endfor %}
+                <br>
+
+               <small><a href="{% url 'password_reset' %}" style="text-decoration:none;color: white;">Forget Password?</a></small><br>
+                <input type="submit" class="btn btn-primary my-3" style="background-color: white; color:black ;" value="Login">
+                <br>
+                <div class="text-center text-white fw-bold"><small>New
+                    to Carrier Hero? <a href=""  style="text-decoration:none;color: red;">Creat an Account</a></small>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+{% endblock main-content %}

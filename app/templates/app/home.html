@@ -1,0 +1,90 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block main-content %}
+<img src="{% static 'images/cover/cover.png' %}" alt="" style="width: 100%;height: 100vh;">
+<br><br>
+<style>
+  #why_counselling .card{
+  cursor: text;
+  border: none;
+  box-shadow: 5px 0px 0px 0px #014e88;
+}
+</style>
+<section id="why_counselling">
+<div class="container section-margin section-padding">
+  <h1 class="text-center mb-5">Why Counselling is Important?</h1>
+  <div class="row g-3">
+    <div class="col-md-4 col-sm-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Helps Pick The Right Career</h5>
+          <p class="card-text">Career Counsellors are experts at assessing your aptitude, personality, interests,
+            and other aspects of you. They use this evaluation to suggest the best career options from all the
+            available and relevant options.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Helps Provide Expert Resources</h5>
+          <p class="card-text">Career Counselling provides access to the resources and knowledge that a career
+            expert possesses. This knowledge of Careers, their scope and the paths to pursue them are most important
+            from the point of view of a parent and child, since most of the times, parents or guardians do not have
+            that kind of knowledge.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Helps Gain Confidence And Insight</h5>
+          <p class="card-text">Career Counselling helps a counselee understand the hurdles in his/her career path.
+            This knowledge helps to develop the confidence to overcome these hurdles. It is the duty of a good
+            counsellor to provide such insight and confidence to the counselee.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </>
+  </section>
+<br><br>
+<section id="services">
+  <div class="container section-margin section-padding">
+    <h1 class="text-center mb-5">What we offer?</h1>
+    <div class="row">
+      <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+        <i class="fas fa-2x fa-hand-point-right mr-3"></i>
+        <h4>Renowned Counsellors</h4>
+      </div>
+      <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+        <i class="fas fa-2x fa-hand-point-right mr-3"></i>
+        <h4>Free Seminars</h4>
+      </div>
+      <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+        <i class="fas fa-2x fa-hand-point-right mr-3"></i>
+        <h4>Choosing Career Track</h4>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+        <i class="fas fa-2x fa-hand-point-right mr-3"></i>
+        <h4>Providing Career Roadmap</h4>
+      </div>
+      <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+        <i class="fas fa-2x fa-hand-point-right mr-3"></i>
+        <h4>Affordable Fees</h4>
+      </div>
+      <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+        <i class="fas fa-2x fa-hand-point-right mr-3"></i>
+        <h4>24/7 Support</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock main-content %}
