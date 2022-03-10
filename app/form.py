@@ -74,6 +74,12 @@ class AppoinmentForm(forms.ModelForm):
     model = Appoinment
     fields=('topics','appoinment_time','appoinment_date')
 
+class PostForm(forms.ModelForm):
+  class Meta:
+    model = Article
+    fields= ('title','body')
+
+
 class MyPasswordChangeForm(PasswordChangeForm):
   old_password = forms.CharField(label=_("Old Password"),
   strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'current-password','autofocus':True,

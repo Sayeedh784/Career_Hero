@@ -19,7 +19,9 @@
         <div class="card-body">
           <h5 class="card-title">{{student.name}}</h5>
           <br>
+          {% if student.user.pk == request.user.id %}
           <a href="{% url 'student_form' student.id %}" role="button" class="btn btn-primary">Edit Profile</a>
+          {% endif %}
 
         </div>
       </div>

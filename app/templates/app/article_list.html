@@ -1,0 +1,31 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Article List{% endblock title %}
+
+{% block main-content %}
+
+  {% for article in object_list %}
+  <div class="container my-5" style="padding-top: 50px;">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <span class="font-weight-bold">{{ article.title }}</span> &middot;
+            <span class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{ article.date }}</span>
+          </div>
+          <div class="card-body">
+            <p>{{ article.body }}</p>
+            <!-- Changes start here! -->
+            {% if article.author.user.pk == request.user.pk %}
+            <a href="{% url 'article_edit' article.pk %}">Edit</a> |
+            <a href="{% url 'article_delete' article.pk %}">Delete</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    {% endfor %}
+
+{% endblock main-content %}

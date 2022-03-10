@@ -28,6 +28,16 @@ urlpatterns=[
   path('decline/<int:pk>/',views.decline,name="decline"),
   path('accept/<int:pk>/',views.accept,name="accept"),
 
+
+  #article
+  path('article_edit/<int:pk>/',ArticleUpdateView.as_view(), name='article_edit'),
+  path('article_detail/<int:pk>/',ArticleDetailView.as_view(), name='article_detail'),
+  path('article_delete/<int:pk>/',ArticleDeleteView.as_view(), name='article_delete'),
+  path('article_new/', views.ArticleCreateView.as_view(), name='article_new'), 
+  path('article_new1/', views.create_post, name='article_new1'), 
+  path('article_list/', ArticleListView.as_view(), name='article_list'),
+
+
   path('login/',views.login_request, name='login'),
   path('logout/',views.logout_view, name='logout'),
   path('passwordchange/', auth_views.PasswordChangeView.as_view(template_name='app/passwordchange.html',form_class=MyPasswordChangeForm,

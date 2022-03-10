@@ -1,13 +1,15 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.views import View
 from .models import *
 from django.contrib import messages
 from .form import *
 from django.contrib.auth import login, logout,authenticate
-from django.views.generic import CreateView,ListView
+from django.views.generic import CreateView,ListView,DetailView,DeleteView
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -158,7 +160,7 @@ def decline(request,pk):
   apn.appoinment_status = "Decline"
   apn.save()
   return redirect(url)
-  # return render(request, 'app/request.html',{'apn':apn})
+
 
 def accept(request,pk):
   url=request.META.get('HTTP_REFERER')
@@ -166,4 +168,66 @@ def accept(request,pk):
   apn.appoinment_status = "Accepted"
   apn.save()
   return redirect(url)
-  # return render(request, 'app/request.html',{'apn':apn})
+
+
+#Article
+
+
+@login_required
+def create_post(request, pk=None):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.instance.author = Counselor.objects.get(user_id=request.user.pk)
+            form.save()
+            return redirect('article_list')
+    else:
+        form = PostForm()
+    context = {'form' : form}
+    return render(request, 'app/article_new.html', context)
+
+
+
+class ArticleCreateView(LoginRequiredMixin,CreateView):
+  model = Article
+  template_name = 'app/article_new.html'
+  fields = ('title','body')
+  login_url = 'login'
+
+  def form_valid(self, form):
+    form.instance.author.user = Counselor.objects.get(user_id=self.user.pk)
+    return super().form_valid(form)
+class ArticleListView(LoginRequiredMixin,ListView):
+  model = Article
+  template_name = 'app/article_list.html'
+  login_url = 'login'
+
+
+class ArticleUpdateView(LoginRequiredMixin,UpdateView):
+  model = Article
+  fields = ('title','body')
+  template_name = 'app/article_edit.html'
+  login_url = 'login'
+
+  def dispatch(self,request,*args,**kwargs):
+    obj= self.get_object()
+    if obj.author.user != self.request.user:
+      raise PermissionDenied
+    return super().dispatch(request,*args,**kwargs)
+
+class ArticleDetailView(LoginRequiredMixin,DetailView):
+  model = Article
+  template_name = 'app/article_detail.html'
+  login_url = 'login'
+
+class ArticleDeleteView(LoginRequiredMixin,DeleteView):
+  model = Article
+  template_name = 'app/article_delete.html'
+  success_url = reverse_lazy('article_list')
+  login_url = 'login'
+
+  def dispatch(self,request,*args,**kwargs):
+    obj= self.get_object()
+    if obj.author.user != self.request.user:
+      raise PermissionDenied
+    return super().dispatch(request,*args,**kwargs)

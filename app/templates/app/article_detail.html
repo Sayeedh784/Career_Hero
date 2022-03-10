@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Create Article{% endblock title %}
+
+{% block main-content %}
+
+<div class="container my-5" style="padding-top: 50px;">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="article-entry">
+        <h2>{{ object.title }}</h2>
+        <p>by {{ object.author }} | {{ object.date }}</p>
+        <p>{{ object.body }}</p>
+      </div>
+      <p><a href="{% url 'article_edit' article.pk %}">Edit</a> |
+        <a href="{% url 'article_delete' article.pk %}">Delete</a>
+      </p>
+      <p>Back to <a href="{% url 'article_list' %}">All Articles</a>.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock main-content %}

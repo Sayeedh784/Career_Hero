@@ -62,3 +62,16 @@ class Appoinment(models.Model):
 
   def __str__(self):
     return str(self.id)
+
+class Article(models.Model):
+  author = models.ForeignKey(Counselor,on_delete=models.CASCADE)
+  title = models.CharField(max_length=70)
+  body = models.TextField()
+  date = models.DateTimeField(auto_now_add=True)
+  
+
+  def __str__(self):
+    return str(self.id)
+
+  def get_absolute_url(self):
+    return reverse('article_detail', args=[str(self.id)])

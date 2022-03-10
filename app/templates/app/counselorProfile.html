@@ -25,6 +25,7 @@
           <br>
           {% if counselor.user.pk == request.user.pk %}
           <a href="{% url 'counselor_form' counselor.id %}" role="button" class="btn btn-primary">Edit Profile</a>
+          <a href="{% url 'article_new1'  %}" role="button" class="btn btn-primary">Write Article</a>
           {% elif request.user.is_student %}
           <a href="{% url 'appoinmentForm' counselor.id  %}" role="button" class="btn btn-primary">Request Appoinment</a>
           {% endif %}

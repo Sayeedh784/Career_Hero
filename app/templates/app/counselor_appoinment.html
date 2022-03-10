@@ -47,9 +47,9 @@
             <td><span><a href="{% url 'accept' apn.pk %}" class="btn btn-sm btn-success">Accept</a></span> <span><a
                   href="{% url 'decline' apn.pk %}" role="button" class="btn btn-sm btn-danger">Decline</a></span> </td>
             {% elif apn.appoinment_status == "Decline" %}
-            <td style="color: red;">{{apn.appoinment_status}} </td>
+            <td style="color: red;">{{apn.appoinment_status}} <a href="{% url 'cancel' apn.id %}"><span class="mx-3" style="color: red;"><i class="far fa-trash-alt"></i></span></a></td>
             {% elif apn.appoinment_status == "Accepted" %}
-            <td style="color: green;">{{apn.appoinment_status}} </td>
+            <td style="color: green;">{{apn.appoinment_status}}  <span class="mx-4" style="color: red;"><i class="far fa-trash-alt "></i></span></i></td>
             {% endif %}
 
 

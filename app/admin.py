@@ -18,3 +18,6 @@ class StudentAdmin(admin.ModelAdmin):
 @admin.register(Appoinment)
 class AppoinmentAdmin(admin.ModelAdmin):
   list_display = ['id','req_user','accept_user','appoinment_time','appoinment_date']
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+  list_display = ['id','title','author']

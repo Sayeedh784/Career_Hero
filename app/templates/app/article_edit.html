@@ -1,0 +1,22 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Create Article{% endblock title %}
+
+{% block main-content %}
+
+
+<div class="container my-5" style="padding-top: 50px;">
+  <div class="row">
+    <div class="col-md-8">
+        <h1>Edit</h1>
+        <form action="" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <br>
+          <button class="btn btn-info ml-2" type="submit">Update</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+{% endblock main-content %}
