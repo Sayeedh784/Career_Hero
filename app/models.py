@@ -37,7 +37,7 @@ class Counselor(models.Model):
 
 class Student(models.Model):
   user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-  name=models.CharField(max_length=30,blank=True,null=True)
+  name = models.CharField(max_length=30,blank=True,null=True)
   email = models.EmailField(max_length=40,blank=True,null=True)
   mobile = models.IntegerField(blank=True,null=True)
   image = models.ImageField(upload_to='images/',null=True,blank=True)
@@ -58,6 +58,7 @@ class Appoinment(models.Model):
   topics = models.CharField(max_length=200,blank=True,null=True)
   appoinment_date=models.DateField()
   appoinment_time = models.TimeField()
+  appoinment_status = models.CharField(max_length=20,default="Pending")
 
   def __str__(self):
     return str(self.id)

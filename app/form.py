@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.db import transaction
 from .models import *
-from django.forms import fields, widgets
+from django.forms import NumberInput, fields, widgets
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm, UserCreationForm, AuthenticationForm, UsernameField
 PasswordChangeForm, PasswordResetForm, SetPasswordForm
@@ -66,6 +66,13 @@ class StudentSignupForm(UserCreationForm):
       student.institute = self.cleaned_data.get('institute')
       student.save()
       return user
+
+class AppoinmentForm(forms.ModelForm):
+  appoinment_time= forms.TimeField(widget=NumberInput(attrs={'type': 'time'}))
+  appoinment_date=forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
+  class Meta:
+    model = Appoinment
+    fields=('topics','appoinment_time','appoinment_date')
 
 class MyPasswordChangeForm(PasswordChangeForm):
   old_password = forms.CharField(label=_("Old Password"),

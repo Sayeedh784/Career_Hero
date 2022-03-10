@@ -1,0 +1,70 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}apn History{% endblock title %}
+
+{% block main-content %}
+
+
+<div class="container my-5" style="padding-top: 80px;">
+  <center>
+    <h2>Appoinment Request</h2>
+  </center>
+  <br><br>
+  <div class="row">
+    <div class="col-md-12 table-responsive">
+      <table class="table table-striped">
+        <!-- <thead style="background-color: #6D0A15; color: white;"> -->
+        <thead>
+          <tr>
+            <th scope="col">Serial no</th>
+            <th scope="col">Student name</th>
+            <th scope="col">Student Email</th>
+            <th scope="col">Student Mobile</th>
+            <th scope="col">Topic</th>
+            <th scope="col">Appoinment Date</th>
+            <th scope="col">Appoinment Time</th>
+            <th scope="col">Appoinment Status</th>
+
+          </tr>
+        </thead>
+        {% for apn in counselor_apn %}
+        {% if apn.accept_user.user.pk == request.user.pk %}
+        <tbody>
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>
+              <a href="{% url 'student_profile' apn.req_user.id %}">{{apn.req_user.name}}</a>
+          </td>
+            <td>{{apn.req_user.email}}</td>
+            <td>{{apn.req_user.mobile}}</td>
+            
+            <td>{{apn.topics}}</td>
+            <td>{{apn.appoinment_date}}</td>
+            <td>{{apn.appoinment_time}}</td>
+
+            {% if apn.appoinment_status == "Pending" %}
+            <td><span><a href="{% url 'accept' apn.pk %}" class="btn btn-sm btn-success">Accept</a></span> <span><a
+                  href="{% url 'decline' apn.pk %}" role="button" class="btn btn-sm btn-danger">Decline</a></span> </td>
+            {% elif apn.appoinment_status == "Decline" %}
+            <td style="color: red;">{{apn.appoinment_status}} </td>
+            {% elif apn.appoinment_status == "Accepted" %}
+            <td style="color: green;">{{apn.appoinment_status}} </td>
+            {% endif %}
+
+
+          </tr>
+
+
+        </tbody>
+        {% endif %}
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock main-content %}

@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from .models import *
 from django.contrib import messages
@@ -92,7 +92,10 @@ def counselor_profile(request,pk):
   context = {'counselor':counselor}
   return render(request, 'app/counselorProfile.html',context)
 
-
+def counselor(request):
+  counselor = Counselor.objects.all()
+  context={'counselors':counselor}
+  return render(request, 'app/counselor.html',context)
 
 #student
 def student_profile(request,pk):
@@ -111,3 +114,56 @@ class StudentUpdateView(LoginRequiredMixin, UpdateView):
     if obj.user != self.request.user:
       raise PermissionDenied
     return super().dispatch(request, *args, **kwargs)
+
+
+#Appoinment
+def appointment_form(request,pk):
+  print(request.POST)
+  if request.method == 'POST':
+    form = AppoinmentForm(request.POST)
+    if form.is_valid():
+      form.instance.accept_user = Counselor.objects.get(pk=pk)
+      instance = form.save(commit=False)
+      form.instance.req_user = Student.objects.get(user_id=request.user.pk)
+      instance.save()
+      messages.success(request, 'Congratulations, Your request sent succesfully!!!')
+      
+  else:
+    form =AppoinmentForm()
+  context = {'form':form,}
+  return render(request,'app/appoinmentForm.html',context)
+
+def appoinment(request):
+  if request.user.is_student:
+    stu_apn = Appoinment.objects.all()
+    return render(request, 'app/appoinments.html',{'stu_apn':stu_apn})
+  elif request.user.is_counselor:
+    counselor_apn=Appoinment.objects.all()
+    student=Student.objects.all()
+    return render(request, 'app/counselor_appoinment.html',{'counselor_apn':counselor_apn,'student':student})
+
+
+#appoinment status
+
+def cancelRequest(request,pk):
+  url=request.META.get('HTTP_REFERER')
+  apn = get_object_or_404(Appoinment, id=pk)
+  apn.delete()
+  return redirect(url)
+  
+
+def decline(request,pk):
+  url=request.META.get('HTTP_REFERER')
+  apn = get_object_or_404(Appoinment, pk=pk)
+  apn.appoinment_status = "Decline"
+  apn.save()
+  return redirect(url)
+  # return render(request, 'app/request.html',{'apn':apn})
+
+def accept(request,pk):
+  url=request.META.get('HTTP_REFERER')
+  apn = get_object_or_404(Appoinment, pk=pk)
+  apn.appoinment_status = "Accepted"
+  apn.save()
+  return redirect(url)
+  # return render(request, 'app/request.html',{'apn':apn})

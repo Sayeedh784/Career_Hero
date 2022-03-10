@@ -14,7 +14,7 @@
         {% if counselor.image %}
         <img  src="{{ counselor.image.url }}" alt="" width="60%" height="200vh">
         {% else %}
-        <img src="{% static 'images/cover/profile_1.jpg' %}" alt="" width="100%" height="100vh">
+        <img src="{% static 'app/images/cover/profile_1.jpg' %}" alt="" width="60%" height="100vh">
         {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{counselor.name}}</h5>
@@ -23,8 +23,11 @@
             
           </div>
           <br>
+          {% if counselor.user.pk == request.user.pk %}
           <a href="{% url 'counselor_form' counselor.id %}" role="button" class="btn btn-primary">Edit Profile</a>
-          
+          {% elif request.user.is_student %}
+          <a href="{% url 'appoinmentForm' counselor.id  %}" role="button" class="btn btn-primary">Request Appoinment</a>
+          {% endif %}
         </div>
       </div>
     </div>

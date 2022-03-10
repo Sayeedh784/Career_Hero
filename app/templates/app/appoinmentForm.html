@@ -1,0 +1,50 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Form Update{% endblock title %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+
+
+
+{% block main-content %}
+
+<div class="container my-5" style="padding-top: 40px;">
+  <div class="row">
+
+    <div class="col-md-6 mx-auto">
+      <div class="card shadow p-5">
+        <div class="card-header text-black">
+          <h2>Appoinment by {{request.user.username|capfirst}}</h2>
+        </div>
+        <div class="card-body">
+
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% if messages %}
+            {% for message in messages %}
+            <p {% if message.tags %} class="alert alert-{{message.tags}}
+            mb-3 {% endif %}">{{message}}</p>
+            {% endfor %}
+            {% endif %}
+
+            <div class="form-group">
+              {% csrf_token %}
+              {{ form | crispy }}
+              {% for error in field.errors %}
+              <span style="color:red">{{ error }}</span>
+
+              {% endfor %}
+              <br>
+              <input type="submit" value="Confrim Appoinment" class="btn btn-primary">
+              <br>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock main-content %}

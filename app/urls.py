@@ -3,6 +3,9 @@ from .import views
 from .views import *
 from .form import *
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns=[
   path('',views.home,name="home"),
@@ -14,7 +17,16 @@ urlpatterns=[
   path('counselor_form/<int:pk>/',views.CounselorUpdateView.as_view(),name="counselor_form"),
   path('student_form/<int:pk>/',views.StudentUpdateView.as_view(),name="student_form"),
   path('counselor_profile/<int:pk>/',views.counselor_profile,name="counselor_profile"),
+  path('counselor/',views.counselor,name="counselor"),
   path('student_profile/<int:pk>/',views.student_profile,name="student_profile"),
+
+  path('appoinmentForm/<int:pk>/',views.appointment_form,name="appoinmentForm"),
+  path('appoinment/',views.appoinment,name="appoinment"),
+#   path('student_appoinment/',views.student_appoinment,name="student_appoinment"),
+
+  path('cancel/<int:pk>/',views.cancelRequest,name="cancel"),
+  path('decline/<int:pk>/',views.decline,name="decline"),
+  path('accept/<int:pk>/',views.accept,name="accept"),
 
   path('login/',views.login_request, name='login'),
   path('logout/',views.logout_view, name='logout'),
@@ -40,4 +52,4 @@ urlpatterns=[
   path('password-reset-complete/', auth_views.PasswordResetCompleteView.
         as_view(template_name='app/password_reset_complete.html'),
         name='password_reset_complete'),
-]
+] 

@@ -22,7 +22,7 @@
   <title>Carrier Hero| {% block title %}{% endblock title %}</title>
 </head>
 <body>
-  <style>
+  <!-- <style>
     .nav-link {
       color: white;
       transition: all .3s ease-in-out;
@@ -34,10 +34,10 @@
       transform: scale(1.1);
   
     }
-  </style>
+  </style> -->
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12">
-      <nav id="nav" class="navbar navbar-expand-lg  fixed-top" style="background-color: #1597E5;">
+      <nav id="nav" class="navbar navbar-expand-lg navbar-dark  fixed-top" style="background-color: #1597E5;">
         <div class="container">
           <a class="navbar-brand" href="/" ><img src="{% static 'images/nav/logo.png' %}" alt="" style="width: 200px;"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -50,14 +50,14 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item mx-2">
-                <a href="" class="nav-link">Counselors</a>
+                <a href="{% url 'counselor' %}" class="nav-link">Counselors</a>
               </li>
               
               
            
               {% if request.user.is_authenticated %}
               <li class="nav-item mx-2">
-                <a href="" class="nav-link">My Appoinments</a>
+                <a href="{% url 'appoinment' %}" class="nav-link">My Appoinments</a>
               </li>
               {% endif %}
               <li class="nav-item mx-2">

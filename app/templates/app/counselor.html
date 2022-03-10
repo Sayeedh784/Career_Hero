@@ -1,0 +1,39 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Counselor{% endblock title %}
+
+{% block main-content %}
+
+
+<div class="container my-5" style="padding-top: 40px;">
+  <div class="row">
+    {% for counselor in counselors %}
+          <div class="col-md-3 my-3">
+            <div class=" card h-100">
+              <img src="{{ counselor.image.url }}" class="card-img-top" style="width: 100%; height: 30vh;" alt="No images">
+              <div class="card-body">
+                <h5 class="card-title">{{counselor.name}}</h5>
+                <p><b>{{counselor.designation}}</b></p>
+      
+                <br>
+                {% if counselor.user.pk == request.user.pk %}
+                
+                <div class="card-footer" style="background-color: #6D0A15; color: white;">
+                  <center>
+                    <h3>My Profile</h3>
+                  </center>
+                </div>
+                {% else %}
+                <a href="{% url 'counselor_profile' counselor.pk %}" class="btn btn-primary">See Profile</a>
+                {% endif %}
+              </div>
+            </div>
+          
+          </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% endblock main-content %}
