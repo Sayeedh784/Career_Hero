@@ -32,29 +32,39 @@ def home(request):
 def register(request):
   return render(request, 'app/register.html')
 
-class Counselor_register(View):
-  def get(self, request):
+
+def counselor_register(request):
+  if request.method == "POST":
+    form=CounselorSignupForm(request.POST)
+    if form.is_valid():
+      form.save()
+      username = form.cleaned_data.get('username')
+      messages.success(request,f'Account Created for {username}!!')
+      form = CounselorSignupForm()
+      return redirect('login')
+  else: 
     form = CounselorSignupForm()
-    return render(request, 'app/counselorsignup.html', {'form': form})
+  context = {
+    'form':form
+  }
+  return render(request,'app/counselorsignup.html',context)
 
-  def post(self, request):
-    form = CounselorSignupForm(request.POST)
+def student_register(request):
+  if request.method == "POST":
+    form=StudentSignupForm(request.POST)
     if form.is_valid():
-      messages.success(request, "Congratulations!!! Registered successfully")
       form.save()
-    return redirect('/login')
-
-class Student_register(View):
-  def get(self, request):
+      username = form.cleaned_data.get('username')
+      messages.success(request,f'Account Created for {username}!!')
+      form = StudentSignupForm()
+      return redirect('login')
+  else: 
     form = StudentSignupForm()
-    return render(request, 'app/studentsignup.html', {'form': form})
+  context = {
+    'form':form
+  }
+  return render(request,'app/studentsignup.html',context)
 
-  def post(self, request):
-    form = StudentSignupForm(request.POST)
-    if form.is_valid():
-      messages.success(request, "Congratulations!!! Registered successfully")
-      form.save()
-    return redirect('/login')
 
 def login_request(request):
     if request.method=='POST':
