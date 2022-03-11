@@ -80,6 +80,15 @@ class PostForm(forms.ModelForm):
     fields= ('title','body')
 
 
+class ThreadForm(forms.Form):
+    username = forms.CharField(label='', max_length=100,)
+
+
+class MessageForm(forms.Form):
+    message = forms.CharField(label='', max_length=1000)
+
+
+
 class MyPasswordChangeForm(PasswordChangeForm):
   old_password = forms.CharField(label=_("Old Password"),
   strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'current-password','autofocus':True,

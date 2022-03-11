@@ -21,3 +21,11 @@ class AppoinmentAdmin(admin.ModelAdmin):
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
   list_display = ['id','title','author']
+
+@admin.register(ThreadModel)
+class ThreadModelAdmin(admin.ModelAdmin):
+  list_display=['id','user','receiver']
+
+@admin.register(MessageModel)
+class MessageModelAdmin(admin.ModelAdmin):
+  list_display=['id','sender_user','receiver_user','date']

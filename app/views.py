@@ -1,8 +1,10 @@
+from itertools import chain
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from .models import *
 from django.contrib import messages
+from django.db.models import Q
 from .form import *
 from django.contrib.auth import login, logout,authenticate
 from django.views.generic import CreateView,ListView,DetailView,DeleteView
@@ -11,6 +13,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+#Search 
+
+def search_list(request):
+  if request.method == 'POST':
+    q = request.POST['q']
+    counselor_data = Counselor.objects.filter(name__icontains=q)
+    data = chain(counselor_data,)
+    
+  context = {'data': data, 'q': q, 'counselor_data':counselor_data}
+  return render(request,'app/search_list.html',context)
 
 
 def home(request):
@@ -91,7 +104,9 @@ class CounselorUpdateView(LoginRequiredMixin, UpdateView):
 
 def counselor_profile(request,pk):
   counselor = Counselor.objects.get(pk=pk)
-  context = {'counselor':counselor}
+  thread = ThreadModel.objects.filter(pk=pk)
+  message_list = MessageModel.objects.filter(thread__pk__contains=pk)
+  context = {'counselor':counselor,'thread':thread,'message_list':message_list}
   return render(request, 'app/counselorProfile.html',context)
 
 def counselor(request):
@@ -102,7 +117,9 @@ def counselor(request):
 #student
 def student_profile(request,pk):
   student = Student.objects.get(pk=pk)
-  context = {'student':student}
+  thread = ThreadModel.objects.filter(pk=pk)
+  message_list = MessageModel.objects.filter(thread__pk__contains=pk)
+  context = {'student':student,'thread':thread,'message_list':message_list}
   return render(request, 'app/studentProfile.html',context)
 
 class StudentUpdateView(LoginRequiredMixin, UpdateView):
@@ -186,17 +203,6 @@ def create_post(request, pk=None):
     context = {'form' : form}
     return render(request, 'app/article_new.html', context)
 
-
-
-class ArticleCreateView(LoginRequiredMixin,CreateView):
-  model = Article
-  template_name = 'app/article_new.html'
-  fields = ('title','body')
-  login_url = 'login'
-
-  def form_valid(self, form):
-    form.instance.author.user = Counselor.objects.get(user_id=self.user.pk)
-    return super().form_valid(form)
 class ArticleListView(LoginRequiredMixin,ListView):
   model = Article
   template_name = 'app/article_list.html'
@@ -231,3 +237,87 @@ class ArticleDeleteView(LoginRequiredMixin,DeleteView):
     if obj.author.user != self.request.user:
       raise PermissionDenied
     return super().dispatch(request,*args,**kwargs)
+
+
+class ListThreads(View):
+    def get(self, request, *args, **kwargs):
+        threads = ThreadModel.objects.filter(
+            Q(user=request.user) | Q(receiver=request.user))
+
+        context = {
+            'threads': threads
+        }
+
+        return render(request, 'app/inbox.html', context)
+
+
+class CreateThread(View):
+    def get(self, request, *args, **kwargs):
+        form = ThreadForm()
+
+        context = {
+            'form': form
+        }
+
+        return render(request, 'app/create_thread.html', context)
+
+    def post(self, request, *args, **kwargs):
+        form = ThreadForm(request.POST)
+
+        username = request.POST.get('username')
+
+        try:
+            receiver = User.objects.get(username=username)
+            if ThreadModel.objects.filter(user=request.user, receiver=receiver).exists():
+                thread = ThreadModel.objects.filter(
+                    user=request.user, receiver=receiver)[0]
+                return redirect('thread', pk=thread.pk)
+            elif ThreadModel.objects.filter(user=receiver, receiver=request.user).exists():
+                thread = ThreadModel.objects.filter(
+                    user=receiver, receiver=request.user)[0]
+                return redirect('thread', pk=thread.pk)
+
+            if form.is_valid():
+                thread = ThreadModel(
+                    user=request.user,
+                    receiver=receiver
+                )
+                thread.save()
+
+                return redirect('thread', pk=thread.pk)
+        except:
+            messages.error(request, 'Invalid username!!')
+            return redirect('create-thread')
+
+
+class ThreadView(View):
+    def get(self, request, pk, *args, **kwargs):
+        form = MessageForm()
+        thread = ThreadModel.objects.get(pk=pk)
+        message_list = MessageModel.objects.filter(thread__pk__contains=pk)
+        context = {
+            'thread': thread,
+            'form': form,
+            'message_list': message_list
+        }
+
+        return render(request, 'app/thread.html', context)
+
+class CreateMessage(View):
+    def post(self, request, pk, *args, **kwargs):
+        thread = ThreadModel.objects.get(pk=pk)
+        if thread.receiver == request.user:
+            receiver = thread.user
+        else:
+            receiver = thread.receiver
+
+        message = MessageModel(
+            thread=thread,
+            sender_user=request.user,
+            receiver_user=receiver,
+            body=request.POST.get('message')
+        )
+
+        message.save()
+
+        return redirect('thread', pk=pk)

@@ -12,6 +12,7 @@ urlpatterns=[
   path('register/',views.register,name="register"),
   path('couselor_signup/',views.Counselor_register.as_view(),name="counselor_signup"),
   path('student_signup/',views.Student_register.as_view(),name="student_signup"),
+  path('search_list/',views.search_list,name="search_list"),
 
   path('profile/<int:pk>/',views.profile,name="profile"),
   path('counselor_form/<int:pk>/',views.CounselorUpdateView.as_view(),name="counselor_form"),
@@ -33,10 +34,14 @@ urlpatterns=[
   path('article_edit/<int:pk>/',ArticleUpdateView.as_view(), name='article_edit'),
   path('article_detail/<int:pk>/',ArticleDetailView.as_view(), name='article_detail'),
   path('article_delete/<int:pk>/',ArticleDeleteView.as_view(), name='article_delete'),
-  path('article_new/', views.ArticleCreateView.as_view(), name='article_new'), 
-  path('article_new1/', views.create_post, name='article_new1'), 
+  path('article_new/', views.create_post, name='article_new'), 
   path('article_list/', ArticleListView.as_view(), name='article_list'),
 
+#Message
+  path('inbox/', ListThreads.as_view(), name='inbox'),
+  path('inbox/create-thread/', CreateThread.as_view(), name='create-thread'),
+  path('inbox/<int:pk>/', ThreadView.as_view(), name='thread'),
+  path('inbox/<int:pk>/create-message/',CreateMessage.as_view(), name='create-message'),
 
   path('login/',views.login_request, name='login'),
   path('logout/',views.logout_view, name='logout'),
