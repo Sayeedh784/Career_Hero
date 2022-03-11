@@ -213,10 +213,10 @@ def create_post(request, pk=None):
     context = {'form' : form}
     return render(request, 'app/article_new.html', context)
 
-class ArticleListView(LoginRequiredMixin,ListView):
+class ArticleListView(ListView):
   model = Article
   template_name = 'app/article_list.html'
-  login_url = 'login'
+  
 
 
 class ArticleUpdateView(LoginRequiredMixin,UpdateView):

@@ -28,6 +28,8 @@
           <a href="{% url 'article_new'  %}" role="button" class="btn btn-primary">Write Article</a>
           {% elif request.user.is_student %}
           <a href="{% url 'appoinmentForm' counselor.id  %}" role="button" class="btn btn-primary">Request Appoinment</a>
+          {% elif not request.user.is_authenticate %}
+          <a href="{% url 'login'   %}" role="button" class="btn btn-outline-danger">Login or Signup for Appoinment</a>
           {% endif %}
         </div>
       </div>
