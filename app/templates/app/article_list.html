@@ -1,31 +1,39 @@
 {% extends 'app/base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block title %}Article List{% endblock title %}
 
 {% block main-content %}
 
-  {% for article in object_list %}
-  <div class="container my-5" style="padding-top: 50px;">
+ 
+  <div class="container my-5" style="padding-top: 80px;">
+    <center><h1>Articles</h1></center>
+    <br>
     <div class="row">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">
-            <span class="font-weight-bold">{{ article.title }}</span> &middot;
-            <span class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{ article.date }}</span>
-          </div>
+      {% for article in object_list %}
+      <div class="col-md-4 my-3">
+        <div class="card h-100" >
+          {% if article.image %}
+          <img src="{{ article.image.url }}" alt="">
+          {% else %}
+          <div></div>
+          {% endif %}
           <div class="card-body">
-            <p>{{ article.body }}</p>
-            <!-- Changes start here! -->
-            {% if article.author.user.pk == request.user.pk %}
-            <a href="{% url 'article_edit' article.pk %}">Edit</a> |
-            <a href="{% url 'article_delete' article.pk %}">Delete</a>
-            {% endif %}
+            <h5 class="card-title">{{ article.title }} </h5>
+            <span class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{ article.date }}</span></h5>
+              <br><br>
+            <p class="card-text">
+              {{ article.body | truncatewords:50 }} <a href="{% url 'article_detail' article.id %}">Read More...</a>
+            </p>
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
   </div>
   
-    {% endfor %}
+    
 
 {% endblock main-content %}
+
+

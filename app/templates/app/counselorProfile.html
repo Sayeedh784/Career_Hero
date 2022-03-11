@@ -49,7 +49,6 @@
       </div>
     </div>
 
-
     <div class="row">
       <div class="col-4 text-muted">
         <p><b> Email:</b></p>
@@ -58,7 +57,6 @@
         <p><b> {{ counselor.email }}</b></p>
       </div>
     </div>
-
 
     <div class="row">
       <div class="col-4 text-muted">
@@ -79,7 +77,6 @@
       </div>
     </div>
 
-
     <div class="row">
       <div class="col-4 text-muted">
         <p><b> Institute:</b></p>
@@ -88,7 +85,6 @@
         <p><b> {{ counselor.institute }}</b></p>
       </div>
     </div>
-
 
     <div class="row">
       <div class="col-4 text-muted">
@@ -137,5 +133,39 @@
   </div>
 </div>
 
+{% if counselor.user.pk == request.user.pk %}
+<div class="container my-5">
+  <center><h1>Articles</h1></center>
+  <hr>
+  <div class="row">
+    {% for article in articles %}
+    <div class="col-md-4 my-3">
+      <div class="card h-100">
+        {% if article.image %}
+        <img src="{{ article.image.url }}" alt="">
+        {% else %}
+        <div></div>
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ article.title }} </h5>
+          <span class="text-muted">Date & Time: {{ article.date }}</span></h5>
+          <br><br>
+          <p class="card-text">
+            {{ article.body | truncatewords:50 }} <a href="{% url 'article_detail' article.id %}">Read More...</a>
+          </p>
+          
+        </div>
+        <div class="card-footer">
+          <a href="{% url 'article_edit' article.id %}" role="button" class="btn btn-primary">Edit</a>
+          <a href="{% url 'article_delete' article.id %}" role="button" class="btn btn-danger">Delete</a>
+        </div>
+        
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endif %}
 
 {% endblock main-content %}

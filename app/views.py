@@ -90,7 +90,8 @@ def logout_view(request):
 def profile(request,pk):
   if request.user.is_counselor:
     counselor= Counselor.objects.get(user_id=request.user.id)
-    context ={'counselor':counselor}
+    articles = Article.objects.filter(author_id=Counselor.objects.get(user_id=request.user.id))
+    context ={'counselor':counselor,'articles':articles}
     return render(request, 'app/counselorProfile.html',context)
   elif request.user.is_student:
     student= Student.objects.get(user_id=request.user.id)
@@ -116,7 +117,8 @@ def counselor_profile(request,pk):
   counselor = Counselor.objects.get(pk=pk)
   thread = ThreadModel.objects.filter(pk=pk)
   message_list = MessageModel.objects.filter(thread__pk__contains=pk)
-  context = {'counselor':counselor,'thread':thread,'message_list':message_list}
+  articles = Article.objects.filter(author_id=request.user.id)
+  context = {'counselor':counselor,'thread':thread,'message_list':message_list,'articles':articles}
   return render(request, 'app/counselorProfile.html',context)
 
 def counselor(request):
@@ -203,7 +205,7 @@ def accept(request,pk):
 @login_required
 def create_post(request, pk=None):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST,request.FILES)
         if form.is_valid():
             form.instance.author = Counselor.objects.get(user_id=request.user.pk)
             form.save()
@@ -213,15 +215,15 @@ def create_post(request, pk=None):
     context = {'form' : form}
     return render(request, 'app/article_new.html', context)
 
+
 class ArticleListView(ListView):
   model = Article
   template_name = 'app/article_list.html'
   
 
-
 class ArticleUpdateView(LoginRequiredMixin,UpdateView):
   model = Article
-  fields = ('title','body')
+  fields = ('title','body','image')
   template_name = 'app/article_edit.html'
   login_url = 'login'
 

@@ -77,7 +77,7 @@ class AppoinmentForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
   class Meta:
     model = Article
-    fields= ('title','body')
+    fields= ('title','body','image')
 
 
 class ThreadForm(forms.Form):
