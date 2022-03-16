@@ -20,9 +20,15 @@
         <br>
         <p>{{ object.body }}</p>
       </div>
+      {% if request.user.is_authenticated %}
+      {% if not request.user.is_student %}
+      {% if not object.author.id == request.user.id %}
       <p><a href="{% url 'article_edit' article.pk %}">Edit</a> |
         <a href="{% url 'article_delete' article.pk %}">Delete</a>
       </p>
+      {% endif %}
+      {% endif %}
+      {% endif %}
       <p>Back to <a href="{% url 'article_list' %}">All Articles</a>.</p>
     </div>
   </div>

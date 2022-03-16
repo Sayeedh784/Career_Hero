@@ -117,8 +117,8 @@ def counselor_profile(request,pk):
   counselor = Counselor.objects.get(pk=pk)
   thread = ThreadModel.objects.filter(pk=pk)
   message_list = MessageModel.objects.filter(thread__pk__contains=pk)
-  articles = Article.objects.filter(author_id=request.user.id)
-  context = {'counselor':counselor,'thread':thread,'message_list':message_list,'articles':articles}
+ 
+  context = {'counselor':counselor,'thread':thread,'message_list':message_list,}
   return render(request, 'app/counselorProfile.html',context)
 
 def counselor(request):
@@ -233,7 +233,7 @@ class ArticleUpdateView(LoginRequiredMixin,UpdateView):
       raise PermissionDenied
     return super().dispatch(request,*args,**kwargs)
 
-class ArticleDetailView(LoginRequiredMixin,DetailView):
+class ArticleDetailView(DetailView):
   model = Article
   template_name = 'app/article_detail.html'
   login_url = 'login'
