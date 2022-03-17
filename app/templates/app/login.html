@@ -4,24 +4,40 @@
 {% load widget_tweaks %}
 {% block main-content %}
 
-
+<style>
+  .cls-1 a{
+    transition: .6s ease;
+  }
+  .cls-1 a:hover{
+    border-bottom: 1px solid white;
+  }
+  .cls-2 input{
+    transition: .6s ease;
+  }
+  .cls-2 input:hover{
+    background-color: white;
+    color: #014E88 !important;
+  }
+</style>
 
 <section>
-  <div class="container my-5" style="padding-top: 100px;">
+  <div class="container mb-5" style="padding-top: 100px;">
     <div class="row">
       <div class="col-md-6 mx-auto">
-        <center><h3>Log in Form</h3></center>
+        <center>
+          <h2 class="mt-5">Login</h2>
+        </center>
         <br>
         <div class="card shadow p-3" style="background-color: #014E88;">
-          <div class="card-header text-black">
-            <center><img src="{% static 'images/nav/logo.png' %}" alt="" style="width: 250px;"></center>
+          <div class="card-header text-black" style="border: none">
+            <center><img src="{% static 'app/images/nav/logo.png' %}" alt="" style="width: 250px;"></center>
           </div>
           <div class="card-body" style="color: white;">
             <form action="{% url 'login' %}" method="POST" novalidate>
               {% if messages %}
               {% for message in messages %}
               <p {% if message.tags %} class="alert alert-{{message.tags}}
-            mb-5 {% endif %}">{{message}}</p>
+            mb-2 {% endif %}">{{message}}</p>
               {% endfor %}
               {% endif %}
               {% csrf_token %}
@@ -33,13 +49,19 @@
                 <span style="color:red">{{ error }}</span>
                 {% endfor %}
                 {% endfor %}
-                <br>
 
-               <small><a href="{% url 'password_reset' %}" style="text-decoration:none;color: white;">Forget Password?</a></small><br>
-                <input type="submit" class="btn btn-primary my-3" style="background-color: white; color:black ;" value="Login">
+                <div class="d-flex align-items-center">
+                  <div class="cls-1">
+                    <small><a href="{% url 'password_reset' %}" style="text-decoration:none;color: white;">Forgot Password?</a></small>
+                  </div>
+                  <div class="ms-auto cls-2">
+                    <input type="submit" class="btn my-3" style="border: 2px solid white; color:white; width: 100px;" value="Login">
+                  </div>
+                </div>
                 <br>
                 <div class="text-center text-white fw-bold"><small>New
-                    to Carrier Hero? <a href="{% url 'register' %}"  style="text-decoration:none;color: red;">Creat an Account</a></small>
+                    to CareerHero? <a href="{% url 'register' %}" style="text-decoration:none;" class="text-danger"> Create an
+                      Account</a></small>
                 </div>
               </div>
             </form>

@@ -3,43 +3,46 @@
 {% block title %}Registration{% endblock title %}
 {% block main-content %}
 
-<div class="container my-5">
-  <h1 class="text-center my-5" style="padding-top: 100px;">Register</h1>
-  <hr>
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-4 col-sm-6">
+<style>
+  .card a {
+    color: white;
+    border: 2px solid white;
+  }
+  .card a:hover{
+    background-color: white;
+    color: #014E88;
+  }
+</style>
 
-    <div class="card shadow " style="width:400px">
-      <div class="card-body">
-        <br><br>
-        <h4 class="card-title">As a Counselor</h4>
-        <h5 class="card-text text-muted">To join as a startup in this community you can find investor and customer
-          easily for grow your business.
-          <h5 />
-          <br><br>
-          <a href="{% url 'counselor_signup' %}" class="btn btn-outline-primary">I'm Counselor</a>
-      </div>
-    </div>
-    </div>
-    <br>
-    <div class="col-md-4 col-sm-6">
-    <div class="card mx-5 shadow " style="width:400px">
-      <div class="card-body">
-        <br><br>
-        <h4 class="card-title">As a Student</h4>
-        <h5 class="card-text text-muted">To join as a investor in this community you can find many good companies with
-          new ideas for invest your money and get profit easily.
-          <h5 />
+<div class="container my-5">
+  <h2 class="text-center my-5" style="padding-top: 100px;">Register</h2>
+  <div class="row">
+    <div class="col-md-2 col-sm-12"></div>
+    <div class="col-md-4 col-sm-12 mb-2">
+      <div class="card shadow" style="width: 100%; height: auto; background-color: #014E88; color: white;">
+        <div class="card-body my-3">
+          <h4 class="card-title">As a Counsellor</h4> <br>
+          <h5 class="card-text" style="color: rgb(194, 194, 194) !important">Do you have counselling experience? Want to counsel students? <br> Sign up from here now!
+          </h5>
           <br>
-          <a href="{% url 'student_signup' %}" class="btn btn-outline-primary">I'm Student</a>
+          <a href="{% url 'counselor_signup' %}" class="btn">I'm Counsellor</a>
+        </div>
       </div>
     </div>
+    <div class="col-md-4 col-sm-12">
+      <div class="card shadow" style="width: 100%; height: auto; background-color: #014E88; color: white;">
+        <div class="card-body my-3">
+          <h4 class="card-title">As a Student</h4> <br>
+          <h5 class="card-text" style="color: rgb(194, 194, 194) !important">Confused about your career decisions? Want motivations and guidelines? <br> Sign up and take an appointment now!
+          </h5>
+          <br>
+            <a href="{% url 'student_signup' %}" class="btn">I'm Student</a>
+        </div>
+      </div>
     </div>
-    <div class="col-md-2"></div>
-    
+    <div class="col-md-2 col-sm-12"></div>
   </div>
-  </div>
+</div>
 
 
 {% endblock main-content %}

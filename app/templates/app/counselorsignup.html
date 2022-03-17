@@ -5,18 +5,34 @@
 {% load widget_tweaks %}
 {% block main-content %}
 
+<style>
+  .card {
+    background-color: #014E88;
+    color: white;
+  }
 
+  #btn {
+    border: 2px solid white;
+    background-color: #014E88;
+    color: white;
+  }
 
+  #btn:hover {
+    background-color: white;
+    color: #014E88;
+  }
+</style>
 
-  <div class="container my-5" style="padding-top: 100px;">
+<section>
+  <div class="container my-4" style="padding-top: 100px;">
     <div class="row">
-      <div class="col-md-6 mx-auto">
-        <div class="card  shadow p-5">
+      <div class="col-md-8 mx-auto">
+        <div class="card shadow p-3">
           <div class="card-header text-black">
-            <h2>Registration for Counselor</h2>
+            <h2>Counsellor Registration</h2>
           </div>
           <div class="card-body">
-            <form action="{% url 'counselor_signup' %}" method="POST" novalidate>
+            <form action="{% url 'student_signup' %}" method="POST" novalidate>
               {% if messages %}
               {% for message in messages %}
               <p {% if message.tags %} class="alert alert-{{message.tags}}
@@ -25,7 +41,7 @@
               {% endif %}
               {% csrf_token %}
               {% for field in form.visible_fields %}
-              <div class="form-group">
+              <div class="form-group mt-3">
                 {{ field.label_tag }}
                 {% render_field field class="form-control" %}
                 {% for error in field.errors %}
@@ -33,11 +49,13 @@
                 {% endfor %}
                 {% endfor %}
                 <br>
-                <input type="submit" value="Register" class="btn btn-primary">
+                <div class="text-end">
+                  <input type="submit" value="Register" class="btn" id="btn">
+                </div>
                 <br>
 
                 <div class="text-center text-primary fw-bold">
-                  <small>Existing User? <a href="{% url 'login' %}" class="text-danger"
+                  <small style="color: white;"> Existing User? <a href="{% url 'login' %}" class="text-danger"
                       style="text-decoration:none">Login Now</a></small>
                 </div>
               </div>
@@ -47,7 +65,7 @@
       </div>
     </div>
   </div>
-
-
+  </div>
+</section>
 
 {% endblock main-content %}
