@@ -7,6 +7,7 @@
 
 <div class="container my-5" style="padding-top: 50px;">
   <div class="row">
+    <div class="col-md-2"></div>
     <div class="col-md-8">
       <div class="article-entry">
         <h2>{{ object.title }}</h2>
@@ -20,6 +21,7 @@
         
         <p>{{ object.body }}</p>
       </div>
+<<<<<<< HEAD
       {% if object.author.user.id == request.user.id %}
   
       
@@ -29,8 +31,16 @@
    
       {% endif %}
     
+=======
+      {% if object.author.pk == request.user.pk %}
+      <p><a href="{% url 'article_edit' article.pk %}">Edit</a> |
+        <a href="{% url 'article_delete' article.pk %}">Delete</a>
+      </p>
+      {% endif %}
+>>>>>>> 47ef6c1fa6637ccecf432d0286a786065202568c
       <p>Back to <a href="{% url 'article_list' %}">All Articles</a>.</p>
     </div>
+    <div class="col-md-2"></div>
   </div>
 </div>
 

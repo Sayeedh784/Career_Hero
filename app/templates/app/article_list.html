@@ -5,12 +5,18 @@
 
 {% block main-content %}
 
- 
+
   <div class="container my-5" style="padding-top: 80px;">
+<<<<<<< HEAD
     <center><h1>Articles</h1></center>
     <br><hr>
+=======
+    <center><h2>Articles</h2></center>
+    <br>
+>>>>>>> 47ef6c1fa6637ccecf432d0286a786065202568c
     <div class="row">
       {% for article in object_list %}
+      {% if not article.author.user.pk == request.user.pk %}
       <div class="col-md-4 my-3">
         <div class="card h-100" >
           {% if article.image %}
@@ -38,10 +44,11 @@
           </div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>
-  
+ 
     
 
 {% endblock main-content %}
