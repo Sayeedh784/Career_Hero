@@ -20,7 +20,7 @@ class AppoinmentAdmin(admin.ModelAdmin):
   list_display = ['id','req_user','accept_user','appoinment_time','appoinment_date']
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-  list_display = ['id','title','author']
+  list_display = ['id','title','author','date']
 
 @admin.register(ThreadModel)
 class ThreadModelAdmin(admin.ModelAdmin):

@@ -117,13 +117,14 @@ def counselor_profile(request,pk):
   counselor = Counselor.objects.get(pk=pk)
   thread = ThreadModel.objects.filter(pk=pk)
   message_list = MessageModel.objects.filter(thread__pk__contains=pk)
- 
+  
   context = {'counselor':counselor,'thread':thread,'message_list':message_list,}
   return render(request, 'app/counselorProfile.html',context)
 
 def counselor(request):
   counselor = Counselor.objects.all()
-  context={'counselors':counselor}
+  total_counsellor = counselor.count()
+  context={'counselors':counselor,'total_counsellor':total_counsellor}
   return render(request, 'app/counselor.html',context)
 
 #student

@@ -21,7 +21,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ article.title }} </h5>
             
-            {% if article.author.id == request.user.id %}
+            {% if not article.author.user.id == request.user.id %}
            <p> <span class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{article.date }}</span></p>
             {% elif request.user.is_student %}
             <p> <span class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{article.date }}</span></p>

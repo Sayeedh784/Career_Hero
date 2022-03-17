@@ -6,11 +6,16 @@
 {% block main-content %}
 
 <div class="container my-5" style="padding-top: 50px;">
+  {% if q %}
   <center>
     <h4>You search for {{q}}</h4>
   </center>
+  
+ 
+  {% endif %}
   <div class="row">
-    {% if counselor_data %}
+    {% if counselor_data and q %}
+   
     {% for counselor in counselor_data %}
 
     <div class="col-md-3 my-3">
@@ -37,6 +42,7 @@
     </div>
 
     {% endfor %}
+    
     {% else %}
     <br>
     <div>
@@ -45,6 +51,7 @@
       </center>
     </div>
     {% endif %}
+    
   </div>
 </div>
 

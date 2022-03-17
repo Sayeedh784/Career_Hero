@@ -67,10 +67,12 @@ class Article(models.Model):
   author = models.ForeignKey(Counselor,on_delete=models.CASCADE)
   title = models.CharField(max_length=70)
   body = models.TextField()
-  image = models.ImageField(upload_to='images',blank=True,null=True)
+  image = models.ImageField(upload_to='images',)
   date = models.DateTimeField(auto_now_add=True)
   
-
+  class Meta:
+    ordering = ['-date',]
+    
   def __str__(self):
     return str(self.id)
 
