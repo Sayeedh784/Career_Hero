@@ -6,19 +6,19 @@
 {% block main-content %}
 
 
-<<<<<<< HEAD
-<div class="container my-5" style="padding-top: 40px;">
-  <p class="text-muted">Showing {{total_counsellor}} result</p>
-=======
 <div class="container my-5" style="padding-top: 80px;">
   <center><h2>Our Counsellors</h1></center> <br>
->>>>>>> 47ef6c1fa6637ccecf432d0286a786065202568c
+
   <div class="row">
-    {% for counselor in counselors %}
+    {% for counselor in page.object_list %}
     
           <div class="col-md-3 my-3">
             <div class=" card h-100">
+              {% if counselor.image %}
               <img src="{{ counselor.image.url }}" class="card-img-top" style="width: 100%; height: 40vh;" alt="No images">
+              {% else %}
+              <img src="{% static 'app/images/img/profile1.jpg' %}" alt="">
+              {% endif %}
               <div class="card-body">
                 <h5 class="card-title">{{counselor.name}}</h5>
                 <p><b>{{counselor.designation}}</b></p>
@@ -42,6 +42,44 @@
     {% endfor %}
   </div>
 </div>
+
+  <br>
+  <div class="container">
+    <div class="row my-5">
+  
+      <div class="col-md-4 offset-md-5">
+        <p>page {{page.number}}/{{page.paginator.num_pages}}</p>
+  
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+  
+            <li class="page-item">
+              {% if page.has_previous %}
+              <a class="page-link" href="{% url 'counselor' %}?page={{ page.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+              {% endif %}
+            </li>
+            {% for num_page in page.paginator.page_range %}
+            {% if page.number == num_page %}
+            <li class="page-item active"><a class="page-link" href="{% url 'counselor' %}?page={{ num_page }}">{{num_page}}</a></li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="{% url 'counselor' %}?page={{ num_page }}">{{ num_page}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            <li class="page-item">
+              {% if page.has_next %}
+              <a class="page-link" href="{% url 'counselor' %}?page={{ page.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+              {% endif %}
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
 
 
 {% endblock main-content %}

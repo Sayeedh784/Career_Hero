@@ -14,7 +14,7 @@ class CounselorSignupForm(UserCreationForm):
   email=forms.EmailField(max_length=50)
   mobile = forms.IntegerField()
   designation = forms.CharField(max_length=20)
-  institute = forms.CharField(max_length=30)
+  institute = forms.CharField(max_length=100)
 
   class Meta(UserCreationForm.Meta):
         model = User
@@ -41,14 +41,14 @@ class CounselorSignupForm(UserCreationForm):
 class StudentSignupForm(UserCreationForm):
   name = forms.CharField(max_length=30)
   email=forms.EmailField(max_length=50)
-  mobile = forms.IntegerField()
-  Class = forms.CharField(max_length=20)
-  institute = forms.CharField(max_length=30)
+  mobile = forms.CharField()
+  cls = forms.CharField(max_length=50)
+  institute = forms.CharField(max_length=100)
 
   class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username','name', 'email','mobile','Class','institute', 'password1', 'password2']
-        labels = {'email': 'Email','mobile,':'Mobile','Class':'Class','institute':'Institute'}
+        fields = ['username','name', 'email','mobile','cls','institute', 'password1', 'password2']
+        labels = {'email': 'Email','mobile,':'Mobile','cls':'Class','institute':'Institute'}
         widgets = {'username': forms.TextInput(
             attrs={'class': "form-control",})}
     

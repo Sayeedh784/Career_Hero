@@ -6,6 +6,7 @@ from .models import *
 from django.contrib import messages
 from django.db.models import Q
 from .form import *
+from django.core.paginator import Paginator
 from django.contrib.auth import login, logout,authenticate
 from django.views.generic import CreateView,ListView,DetailView,DeleteView
 from django.views.generic.edit import UpdateView
@@ -21,13 +22,16 @@ def search_list(request):
     q = request.POST['q']
     counselor_data = Counselor.objects.filter(name__icontains=q)
     data = chain(counselor_data)
-    
-  context = {'data': data, 'q': q, 'counselor_data':counselor_data}
+    total_counsellor=counselor_data.count()
+  context = {'data': data, 'q': q, 'counselor_data':counselor_data,'total_counsellor':total_counsellor}
   return render(request,'app/search_list.html',context)
 
 
 def home(request):
-  return render(request, 'app/home.html')
+  article = Article.objects.all()
+  recent_article=article[:3]
+  counselor = Counselor.objects.all()
+  return render(request, 'app/home.html',{'recent_article':recent_article,'counselors':counselor})
 
 def register(request):
   return render(request, 'app/register.html')
@@ -103,7 +107,7 @@ def profile(request,pk):
 #counselor
 class CounselorUpdateView(LoginRequiredMixin, UpdateView):
   model = Counselor
-  fields = ('name', 'mobile', 'email', 'image','designation','institute','category','address','counselling_experience','description','per_session_fee' )
+  fields = ('name', 'mobile', 'email', 'image','designation','institute','category','address','counselling_experience','description','per_session_fee','counselling_day','counselling_time' )
   template_name = 'app/updateForm.html'
   login_url = 'login'
 
@@ -124,7 +128,10 @@ def counselor_profile(request,pk):
 def counselor(request):
   counselor = Counselor.objects.all()
   total_counsellor = counselor.count()
-  context={'counselors':counselor,'total_counsellor':total_counsellor}
+  page = Paginator(counselor,per_page=4)
+  page_list=request.GET.get('page')
+  page=page.get_page(page_list)
+  context={'counselors':counselor,'total_counsellor':total_counsellor,'page':page}
   return render(request, 'app/counselor.html',context)
 
 #student

@@ -8,7 +8,7 @@
 
 <div class="container my-5" style="padding-top: 80px;">
   <center>
-    <h2>Appoinment Request</h2>
+    <h2>Appointment Request</h2>
   </center>
   <br><br>
   <div class="row">
@@ -17,14 +17,14 @@
         <!-- <thead style="background-color: #6D0A15; color: white;"> -->
         <thead>
           <tr>
-            <th scope="col">Serial no</th>
-            <th scope="col">Student name</th>
-            <th scope="col">Student Email</th>
-            <th scope="col">Student Mobile</th>
-            <th scope="col">Topic</th>
-            <th scope="col">Appoinment Date</th>
-            <th scope="col">Appoinment Time</th>
-            <th scope="col">Appoinment Status</th>
+    
+            <th scope="col" class="text-center">Student name</th>
+            <th scope="col" class="text-center">Student Email</th>
+            <th scope="col" class="text-center">Student Mobile</th>
+            <th scope="col" class="text-center">Topic</th>
+            <th scope="col" class="text-center">Appointment Date</th>
+            <th scope="col" class="text-center">Appointment Time</th>
+            <th scope="col" class="text-center">Appointment Status</th>
 
           </tr>
         </thead>
@@ -32,24 +32,24 @@
         {% if apn.accept_user.user.pk == request.user.pk %}
         <tbody>
           <tr>
-            <th scope="row">{{forloop.counter}}</th>
-            <td>
+            
+            <td class="text-center">
               <a href="{% url 'student_profile' apn.req_user.id %}">{{apn.req_user.name}}</a>
           </td>
-            <td>{{apn.req_user.email}}</td>
-            <td>{{apn.req_user.mobile}}</td>
+            <td class="text-center">{{apn.req_user.email}}</td>
+            <td class="text-center">{{apn.req_user.mobile}}</td>
             
-            <td>{{apn.topics}}</td>
-            <td>{{apn.appoinment_date}}</td>
-            <td>{{apn.appoinment_time}}</td>
+            <td class="text-center">{{apn.topics}}</td>
+            <td class="text-center">{{apn.appoinment_date}}</td>
+            <td class="text-center">{{apn.appoinment_time}}</td>
 
             {% if apn.appoinment_status == "Pending" %}
             <td><span><a href="{% url 'accept' apn.pk %}" class="btn btn-sm btn-success">Accept</a></span> <span><a
                   href="{% url 'decline' apn.pk %}" role="button" class="btn btn-sm btn-danger">Decline</a></span> </td>
             {% elif apn.appoinment_status == "Decline" %}
-            <td style="color: red;">{{apn.appoinment_status}} <a href="{% url 'cancel' apn.id %}"><span class="mx-3" style="color: red;"><i class="far fa-trash-alt"></i></span></a></td>
+            <td style="color: red;" class="text-center">{{apn.appoinment_status}} <a href="{% url 'cancel' apn.id %}"></a></td>
             {% elif apn.appoinment_status == "Accepted" %}
-            <td style="color: green;">{{apn.appoinment_status}}  <span class="mx-4" style="color: red;"><i class="far fa-trash-alt "></i></span></i></td>
+            <td style="color: green;" class="text-center">{{apn.appoinment_status}} </i></td>
             {% endif %}
 
 

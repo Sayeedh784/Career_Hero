@@ -14,7 +14,7 @@
         {% if counselor.image %}
         <img src="{{ counselor.image.url }}" alt="" width="50%" height="300px">
         {% else %}
-        <img src="{% static 'app/images/cover/profile_1.jpg' %}" alt="" width="100%" height="auto">
+        <img src="{% static 'app/images/img/profile1.jpg' %}" alt="" width="50%" height="300px">
         {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{counselor.name}}</h5>
@@ -27,16 +27,13 @@
           <a href="{% url 'counselor_form' counselor.id %}" role="button" class="btn btn-primary">Edit Profile</a>
           <a href="{% url 'article_new'  %}" role="button" class="btn btn-primary">Write Article</a>
           {% elif request.user.is_student %}
-<<<<<<< HEAD
-          <a href="{% url 'appoinmentForm' counselor.id  %}" role="button" class="btn btn-primary">Request Appoinment</a>
-=======
+
           <a href="{% url 'appoinmentForm' counselor.id  %}" role="button" class="btn btn-primary">Request
-            Appoinment</a>
+            Appointment</a>
           {% elif request.user.is_counselor %}
           <div></div>
->>>>>>> 47ef6c1fa6637ccecf432d0286a786065202568c
           {% elif not request.user.is_authenticated %}
-          <a href="{% url 'login'   %}" role="button" class="btn btn-outline-danger">Login or Signup for Appoinment</a>
+          <a href="{% url 'login'   %}" role="button" class="btn btn-outline-danger">Login or Signup for Appointment</a>
           {% endif %}
         </div>
       </div>
@@ -131,6 +128,22 @@
             </div>
             <div class="col-6">
               <p><b> {{ counselor.per_session_fee }} Taka</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Counselling Days:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.counselling_day }} </b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b>Counselling Time:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.counselling_time }}</b></p>
             </div>
           </div>
 

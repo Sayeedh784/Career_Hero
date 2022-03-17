@@ -1,6 +1,6 @@
 {% extends 'app/base.html' %}
 {% load static %}
-{% block title %}Startup Registration{% endblock title %}
+{% block title %}Counsellor Registration{% endblock title %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 {% block main-content %}
@@ -32,11 +32,10 @@
             <h2>Counsellor Registration</h2>
           </div>
           <div class="card-body">
-            <form action="{% url 'student_signup' %}" method="POST" novalidate>
+            <form action="{% url 'counselor_signup' %}" method="POST" novalidate>
               {% if messages %}
               {% for message in messages %}
-              <p {% if message.tags %} class="alert alert-{{message.tags}}
-            mb-5 {% endif %}">{{message}}</p>
+              <p {% if message.tags %} class="alert alert-{{message.tags}}mb-3 {% endif %}">{{message}}</p>
               {% endfor %}
               {% endif %}
               {% csrf_token %}

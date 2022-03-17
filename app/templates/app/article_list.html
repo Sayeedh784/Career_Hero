@@ -5,52 +5,84 @@
 
 {% block main-content %}
 
+<style>
+  /* Career Articles */
+  #articles .card {
+    transition: all ease .6s;
+    cursor: pointer;
+    border-bottom: #014e88 solid 5px;
+  }
 
-  <div class="container my-5" style="padding-top: 80px;">
-<<<<<<< HEAD
-    <center><h1>Articles</h1></center>
-    <br><hr>
-=======
-    <center><h2>Articles</h2></center>
-    <br>
->>>>>>> 47ef6c1fa6637ccecf432d0286a786065202568c
-    <div class="row">
-      {% for article in object_list %}
-      {% if not article.author.user.pk == request.user.pk %}
-      <div class="col-md-4 my-3">
-        <div class="card h-100" >
-          {% if article.image %}
-          <img src="{{ article.image.url }}" alt="">
+  #articles .card:hover{
+    background-color: #014e88;
+    color: white;
+    cursor: pointer;
+  }
+  #articles .card:hover a{
+    color: white;
+  }
+
+  #articles .see-all .btn {
+    border: #014e88 solid 2px;
+    background-color: white;
+    color: #014e88;
+    transition: .6s all ease;
+    width: 40%;
+  }
+
+  #articles .see-all .btn:hover,
+  .see-all .btn:hover i {
+    background-color: #014e88;
+    color: white;
+  }
+
+  #articles button h4 {
+    text-align: center;
+  }
+</style>
+
+<div id="articles" class="container my-5" style="padding-top: 80px;">
+
+  <center>
+    <h1>Articles</h1>
+  </center>
+  <br>
+  <hr>
+  <div class="row">
+    {% for article in object_list %}
+
+    <div class="col-md-4 my-3">
+      <div class="card h-100">
+        {% if article.image %}
+        <img src="{{ article.image.url }}" alt="">
+        {% else %}
+        <div></div>
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ article.title }} </h5>
+
+          {% if not article.author.user.id == request.user.id %}
+          <p class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{ article.date }}</></p>
+          {% elif request.user.is_student %}
+          <p class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{ article.date }}</></p>
+          {% elif not request.user.is_authenticated %}
+          <p class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{ article.date }}</span></p>
+
           {% else %}
-          <div></div>
+          <span class="text-muted">by <p>{{ article.author.name }} | {{ article.date }}</p></span>
           {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ article.title }} </h5>
-            
-            {% if not article.author.user.id == request.user.id %}
-           <p> <span class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{article.date }}</span></p>
-            {% elif request.user.is_student %}
-            <p> <span class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{article.date }}</span></p>
-            {% elif not request.user.is_authenticated %}
-            <p> <span class="text-muted">by <a href="{% url 'counselor_profile' article.author.id %}">{{ article.author.name }}</a> | {{article.date }}</span></p>
-            
-            {% else %}
-            <span class="text-muted">by <p>{{ article.author.name }} | {{ article.date }}</p></span>
-            {% endif %}  
-            <br>
-            <p class="card-text">
-              {{ article.body | truncatewords:50 }} <a href="{% url 'article_detail' article.id %}">Read More...</a>
-            </p>
-          </div>
+          <br>
+          <p class="card-text">
+            {{ article.body | truncatewords:50 }} <a href="{% url 'article_detail' article.id %}">Read More...</a>
+          </p>
         </div>
       </div>
-      {% endif %}
-      {% endfor %}
     </div>
+
+    {% endfor %}
   </div>
- 
-    
+</div>
+
+
 
 {% endblock main-content %}
-
-

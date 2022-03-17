@@ -37,13 +37,13 @@
       </center>
       {% else %}
       <center>
-        <h3 style="color: white;">No Messages</h3>
+        <h3 style="color: white;">Inbox Empty</h3>
       </center>
       {% endif %}
       {% for thread in threads.all %}
 
       <div class="card p-3 shadow-sm my-2">
-        <h5> {{ thread.receiver }}</h5>
+        <h5>{{ thread.user }} - {{ thread.receiver }}</h5>
         <a class="stretched-link" href="{% url 'thread' thread.pk %}"></a>
       </div>
 

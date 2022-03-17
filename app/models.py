@@ -22,12 +22,14 @@ class Counselor(models.Model):
   mobile = models.IntegerField(blank=True,null=True)
   image = models.ImageField(upload_to='images/',null=True,blank=True)
   designation = models.CharField(max_length=30,blank=True,null=True)
-  institute = models.CharField(max_length=30,blank=True,null=True)
+  institute = models.CharField(max_length=300,blank=True,null=True)
   category = models.CharField(max_length=50,choices=CATEGORIES,null=True,blank=True)
   address = models.CharField(max_length=100,blank=True,null=True)
   counselling_experience = models.IntegerField(blank=True,null=True)
   description = models.TextField(max_length=2000,blank=True,null=True)
   per_session_fee = models.IntegerField(blank=True,null=True)
+  counselling_day=models.CharField(max_length=100,null=True,blank=True)
+  counselling_time=models.CharField(max_length=100,null=True,blank=True)
 
   def __str__(self):
     return str(self.id)
@@ -42,7 +44,7 @@ class Student(models.Model):
   mobile = models.IntegerField(blank=True,null=True)
   image = models.ImageField(upload_to='images/',null=True,blank=True)
   cls = models.CharField(max_length=30,blank=True,null=True)
-  institute = models.CharField(max_length=30,blank=True,null=True)
+  institute = models.CharField(max_length=300,blank=True,null=True)
   address = models.CharField(max_length=100,blank=True,null=True)
   area_of_interest = models.CharField(max_length=100,blank=True,null=True)
 

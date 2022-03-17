@@ -5,6 +5,20 @@
 
 {% block main-content %}
 
+<style>
+  #all-articles a {
+    background-color: #014e88;
+    color: white;
+    padding: 20px;
+    margin: auto;
+    transition: .4s ease;
+  }
+
+  #all-articles a:hover {
+    background-color: #00335a !important;
+  }
+</style>
+
 <div class="container my-5" style="padding-top: 50px;">
   <div class="row">
     <div class="col-md-2"></div>
@@ -12,33 +26,29 @@
       <div class="article-entry">
         <h2>{{ object.title }}</h2>
         <p>by {{ object.author.name }} | {{ object.date }}</p>
-        <br>
         {% if object.image %}
-        <img src="{{ object.image.url }}" alt="">
+        <img src="{{ object.image.url }}" width="100%" height="auto" alt="">
         {% else %}
         <div></div>
         {% endif %}
-        
+        <br><br>
+
         <p>{{ object.body }}</p>
       </div>
-<<<<<<< HEAD
+
       {% if object.author.user.id == request.user.id %}
-  
-      
-      <p><a href="{% url 'article_edit' article.pk %}" role="button" class="btn btn-primary">Edit</a> 
+
+
+      <p>
+        <a href="{% url 'article_edit' article.pk %}" role="button" class="btn btn-primary">Edit</a>
         <a href="{% url 'article_delete' article.pk %}" role="button" class="btn btn-danger">Delete</a>
       </p>
-   
+
       {% endif %}
-    
-=======
-      {% if object.author.pk == request.user.pk %}
-      <p><a href="{% url 'article_edit' article.pk %}">Edit</a> |
-        <a href="{% url 'article_delete' article.pk %}">Delete</a>
-      </p>
-      {% endif %}
->>>>>>> 47ef6c1fa6637ccecf432d0286a786065202568c
-      <p>Back to <a href="{% url 'article_list' %}">All Articles</a>.</p>
+
+      <div class="mt-5" id="all-articles">
+        <a style="text-decoration: none; color: white;" href="{% url 'article_list' %}">Back to all Articles</a>
+      </div>
     </div>
     <div class="col-md-2"></div>
   </div>

@@ -6,17 +6,12 @@
 {% block main-content %}
 
 <div class="container my-5" style="padding-top: 50px;">
-  {% if q %}
-  <center>
-    <h2>Our Counsellors</h2>
-  </center>
-<<<<<<< HEAD
-  
  
+  {% if q %}
+ <div><h4 class="text-center">You search for "{{q}}"</h4></div>
   {% endif %}
-=======
-    <h4>You search for {{q}}</h4>
->>>>>>> 47ef6c1fa6637ccecf432d0286a786065202568c
+   
+<p class="text-muted">showing {{total_counsellor}} results</p>
   <div class="row">
     {% if counselor_data and q %}
    
@@ -24,7 +19,11 @@
 
     <div class="col-md-3 my-3">
       <div class=" card h-100">
+        {% if counselor.image %}
         <img src="{{ counselor.image.url }}" class="card-img-top" style="width: 100%; height: 30vh;" alt="No images">
+        {% else %}
+        <img src="{% static 'app/images/img/profile1.jpg' %}" alt="">
+        {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{counselor.name}}</h5>
           <p><b>{{counselor.designation}}</b></p>
@@ -50,9 +49,9 @@
     {% else %}
     <br>
     <div>
-      <center>
-        <h4 style="color: red;">Nothing Found!!!</h4>
-      </center>
+      
+        <h4 class="text-center" style="color: red;">Nothing Found!!!</h4>
+      
     </div>
     {% endif %}
     

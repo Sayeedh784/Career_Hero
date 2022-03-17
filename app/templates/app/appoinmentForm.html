@@ -8,13 +8,26 @@
 
 {% block main-content %}
 
+<style>
+  #confirm input {
+    background-color: #014e88;
+    color: white;
+    padding: 10px;
+    transition: .4s ease;
+  }
+
+  #confirm input:hover {
+    background-color: #00335a !important;
+  }
+</style>
+
 <div class="container my-5" style="padding-top: 40px;">
   <div class="row">
 
     <div class="col-md-6 mx-auto">
       <div class="card shadow p-5">
         <div class="card-header text-black">
-          <h2>Appoinment by {{request.user.username|capfirst}}</h2>
+          <h2>Appointment by {{request.user.username|capfirst}}</h2>
         </div>
         <div class="card-body">
 
@@ -34,7 +47,9 @@
 
               {% endfor %}
               <br>
-              <input type="submit" value="Confrim Appoinment" class="btn btn-primary">
+              <di id="confirm">
+                <input type="submit" value="Confirm Appointment" class="btn">
+              </di>
               <br>
             </div>
 
