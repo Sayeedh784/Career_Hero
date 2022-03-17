@@ -67,6 +67,13 @@ class StudentSignupForm(UserCreationForm):
       student.save()
       return user
 
+class StudentUpdateForm(forms.ModelForm):
+  class Meta:
+    model = Student
+    fields = ('name', 'mobile', 'email', 'image','cls','institute','address','area_of_interest' )
+    labels = {'cls':'Class'}
+
+
 class AppoinmentForm(forms.ModelForm):
   appoinment_time= forms.TimeField(widget=NumberInput(attrs={'type': 'time'}))
   appoinment_date=forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
@@ -96,7 +103,7 @@ class MyPasswordChangeForm(PasswordChangeForm):
   new_password1 = forms.CharField(label=_("New Password"),
   strip=False,widget=forms.PasswordInput(attrs={'autocomplete':'New password',
   'class':'form-control'}),help_text=password_validation.password_validators_help_text_html())
-  new_password2 = forms.CharField(label=_("Confrim New Password"),
+  new_password2 = forms.CharField(label=_("Confirm New Password"),
   strip=False,widget=forms.PasswordInput(attrs={'autocomplete':'current-password',
   'class':'form-control'}))
 

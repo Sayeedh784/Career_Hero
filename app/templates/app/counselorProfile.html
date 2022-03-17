@@ -6,143 +6,148 @@
 {% block main-content %}
 
 <div class="container my-5" style="padding-top: 50px;">
-  <div class="row">
-  
+  <div class="row ">
+
     <div class="col-md-6">
 
-      <div class="card align-items-center " style="border: 0; margin-top: 20%; margin-left: 10%;">
+      <div class="card align-items-center" style="border: none;">
         {% if counselor.image %}
-        <img  src="{{ counselor.image.url }}" alt="" width="60%" height="200vh">
+        <img src="{{ counselor.image.url }}" alt="" width="50%" height="300px">
         {% else %}
-        <img src="{% static 'app/images/cover/profile_1.jpg' %}" alt="" width="60%" height="100vh">
+        <img src="{% static 'app/images/cover/profile_1.jpg' %}" alt="" width="100%" height="auto">
         {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{counselor.name}}</h5>
           <div class="card-text">
             <b>{{counselor.designation}}</b>
-            
+
           </div>
           <br>
           {% if counselor.user.pk == request.user.pk %}
           <a href="{% url 'counselor_form' counselor.id %}" role="button" class="btn btn-primary">Edit Profile</a>
           <a href="{% url 'article_new'  %}" role="button" class="btn btn-primary">Write Article</a>
           {% elif request.user.is_student %}
-          <a href="{% url 'appoinmentForm' counselor.id  %}" role="button" class="btn btn-primary">Request Appoinment</a>
-          {% elif not request.user.is_authenticate %}
+          <a href="{% url 'appoinmentForm' counselor.id  %}" role="button" class="btn btn-primary">Request
+            Appoinment</a>
+          {% elif request.user.is_counselor %}
+          <div></div>
+          {% elif not request.user.is_authenticated %}
           <a href="{% url 'login'   %}" role="button" class="btn btn-outline-danger">Login or Signup for Appoinment</a>
           {% endif %}
         </div>
       </div>
     </div>
     <div class="col-md-6">
-<div class="card">
-  <div class="card-header">
-    <h6>Counselor Informatuion</h6>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> username:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.user.username }}</b></p>
-      </div>
-    </div>
+      <div class="card">
+        <div class="card-header">
+          <h6>Counsellor Information</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Username:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.user.username }}</b></p>
+            </div>
+          </div>
 
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> Email:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.email }}</b></p>
-      </div>
-    </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Email:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.email }}</b></p>
+            </div>
+          </div>
 
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> Mobile:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.mobile }}</b></p>
-      </div>
-    </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Mobile:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.mobile }}</b></p>
+            </div>
+          </div>
 
 
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> Designation:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.designation }}</b></p>
-      </div>
-    </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Designation:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.designation }}</b></p>
+            </div>
+          </div>
 
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> Institute:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.institute }}</b></p>
-      </div>
-    </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Institute:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.institute }}</b></p>
+            </div>
+          </div>
 
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> Category:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.category }}</b></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> Address:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.address }}</b></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> Counselling Experience:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.counselling_experience }}</b></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> Description:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.description }}</b></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-4 text-muted">
-        <p><b> per_session_fee:</b></p>
-      </div>
-      <div class="col-6">
-        <p><b> {{ counselor.per_session_fee }}</b></p>
-      </div>
-    </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Category:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.category }}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Address:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.address }}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Counselling Experience:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.counselling_experience }} Years</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Description:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.description }}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Per Session Fee:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.per_session_fee }} Taka</b></p>
+            </div>
+          </div>
 
-  </div>
-</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 {% if counselor.user.pk == request.user.pk %}
 <div class="container my-5">
-  <center><h1>Articles</h1></center>
+  <center>
+    <h2>My Articles</h1>
+  </center>
   <hr>
   <div class="row">
     {% for article in articles %}
-    <div class="col-md-4 my-3">
+    <div class="col-md-4 my-3 ">
       <div class="card h-100">
         {% if article.image %}
-        <img src="{{ article.image.url }}" alt="">
+        <img src="{{ article.image.url }}" width="100%" height="400px" alt="">
         {% else %}
         <div></div>
         {% endif %}
@@ -153,13 +158,13 @@
           <p class="card-text">
             {{ article.body | truncatewords:50 }} <a href="{% url 'article_detail' article.id %}">Read More...</a>
           </p>
-          
+
         </div>
         <div class="card-footer">
           <a href="{% url 'article_edit' article.id %}" role="button" class="btn btn-primary">Edit</a>
           <a href="{% url 'article_delete' article.id %}" role="button" class="btn btn-danger">Delete</a>
         </div>
-        
+
       </div>
     </div>
     {% endfor %}

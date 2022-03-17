@@ -8,10 +8,10 @@
 <div class="container my-5" style="padding-top: 50px;">
   <div class="row">
     <div class="col-md-8">
-        <h1>Edit</h1>
+        <h2>Edit</h2>
         <form action="" method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          {{ form.as_p }}
+          {{ form | crispy }}
           <br>
           <button class="btn btn-info ml-2" type="submit">Update</button>
         </form>

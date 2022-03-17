@@ -20,7 +20,7 @@ def search_list(request):
   if request.method == 'POST':
     q = request.POST['q']
     counselor_data = Counselor.objects.filter(name__icontains=q)
-    data = chain(counselor_data,)
+    data = chain(counselor_data)
     
   context = {'data': data, 'q': q, 'counselor_data':counselor_data}
   return render(request,'app/search_list.html',context)
@@ -117,8 +117,8 @@ def counselor_profile(request,pk):
   counselor = Counselor.objects.get(pk=pk)
   thread = ThreadModel.objects.filter(pk=pk)
   message_list = MessageModel.objects.filter(thread__pk__contains=pk)
-  articles = Article.objects.filter(author_id=request.user.id)
-  context = {'counselor':counselor,'thread':thread,'message_list':message_list,'articles':articles}
+  # articles = Article.objects.filter(author_id=request.user.id)
+  context = {'counselor':counselor,'thread':thread,'message_list':message_list,}
   return render(request, 'app/counselorProfile.html',context)
 
 def counselor(request):
@@ -136,7 +136,7 @@ def student_profile(request,pk):
 
 class StudentUpdateView(LoginRequiredMixin, UpdateView):
   model = Student
-  fields = ('name', 'mobile', 'email', 'image','cls','institute','address','area_of_interest' )
+  form_class = StudentUpdateForm
   template_name = 'app/updateForm.html'
   login_url = 'login'
 
