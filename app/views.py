@@ -1,3 +1,4 @@
+import email
 from itertools import chain
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -13,6 +14,10 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 # Create your views here.
 
 #Search 
@@ -71,7 +76,10 @@ def student_register(request):
 
 
 def login_request(request):
-    if request.method=='POST':
+    next_url = request.GET.get('next')
+    print(next_url)
+    if request.method =='POST':
+        next_url = request.POST.get('next')
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
@@ -79,6 +87,8 @@ def login_request(request):
             user = authenticate(username=username, password=password)
             if user is not None :
                 login(request,user)
+                if next_url:
+                    return redirect(next_url)
                 return redirect('/')
             else:
                 messages.error(request,"Invalid username or password")
@@ -157,7 +167,6 @@ class StudentUpdateView(LoginRequiredMixin, UpdateView):
 
 #Appoinment
 def appointment_form(request,pk):
-  print(request.POST)
   if request.method == 'POST':
     form = AppoinmentForm(request.POST)
     if form.is_valid():
@@ -165,6 +174,17 @@ def appointment_form(request,pk):
       instance = form.save(commit=False)
       form.instance.req_user = Student.objects.get(user_id=request.user.pk)
       instance.save()
+      current_site=get_current_site(request)
+      template=render_to_string('app/account.html',{'domain':current_site.domain})
+      email=EmailMessage(
+        'Appointment Request',
+        template,
+        settings.EMAIL_HOST_USER,
+        [form.instance.accept_user.email],
+      )
+      email.fail_silently=False
+      email.send()
+      return redirect('appointment')
       messages.success(request, 'Congratulations, Your request sent succesfully!!!')
       
   else:

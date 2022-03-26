@@ -1,8 +1,11 @@
 {% extends 'app/base.html' %}
 {% load static %}
 {% block title %}Login{% endblock title %}
+{% load crispy_forms_tags %}
 {% load widget_tweaks %}
 {% block main-content %}
+
+
 
 <style>
   .cls-1 a{
@@ -40,22 +43,24 @@
               {% endfor %}
               {% endif %}
               {% csrf_token %}
-              {% for field in form.visible_fields %}
-              <div class="form-group">
-                {{ field.label_tag }}
-                {% render_field field class="form-control" %}
+             
+                {{ form | crispy }}
+        
+               
+                <input type="hidden" name="next" value="{{request.GET.next}}">
+              
+                <input type="submit" class="btn my-3" style="border: 2px solid white; color:white; width: 100px;" value="Login">
+            
                 {% for error in field.errors %}
                 <span style="color:red">{{ error }}</span>
                 {% endfor %}
-                {% endfor %}
+                
 
                 <div class="d-flex align-items-center">
                   <div class="cls-1">
                     <small><a href="{% url 'password_reset' %}" style="text-decoration:none;color: white;">Forgot Password?</a></small>
                   </div>
-                  <div class="ms-auto cls-2">
-                    <input type="submit" class="btn my-3" style="border: 2px solid white; color:white; width: 100px;" value="Login">
-                  </div>
+                 
                 </div>
                 <br>
                 <div class="text-center text-white fw-bold"><small>New
@@ -68,7 +73,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </section>
 
