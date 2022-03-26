@@ -11,10 +11,10 @@
  <div><h4 class="text-center">You search for "{{q}}"</h4></div>
   {% endif %}
    
-<p class="text-muted">showing {{total_counsellor}} results</p>
+
   <div class="row">
     {% if counselor_data and q %}
-   
+  <p class="text-muted">showing {{total_counsellor}} results</p>
     {% for counselor in counselor_data %}
 
     <div class="col-md-3 my-3">
