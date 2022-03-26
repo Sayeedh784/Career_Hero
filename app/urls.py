@@ -21,8 +21,8 @@ urlpatterns=[
   path('counselor/',views.counselor,name="counselor"),
   path('student_profile/<int:pk>/',views.student_profile,name="student_profile"),
 
-  path('appoinmentForm/<int:pk>/',views.appointment_form,name="appoinmentForm"),
-  path('appoinment/',views.appoinment,name="appointment"),
+  path('appointmentForm/<int:pk>/',views.appointment_form,name="appoinmentForm"),
+  path('appointment/',views.appoinment,name="appointment"),
 #   path('student_appoinment/',views.student_appoinment,name="student_appoinment"),
 
   path('cancel/<int:pk>/',views.cancelRequest,name="cancel"),
