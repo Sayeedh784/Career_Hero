@@ -131,7 +131,7 @@
 
               {% if request.user.is_authenticated %}
               <li class="nav-item mx-2">
-                <a href="{% url 'appoinment' %}" class="nav-link">My Appointments</a>
+                <a href="{% url 'appointment' %}" class="nav-link">My Appointments</a>
               </li>
               {% endif %}
 
@@ -217,6 +217,7 @@
   <script src="{% static 'app/js/owl.carousel.min.js' %}"></script>
   <script src="{% static 'app/js/all.min.js' %}"></script>
   <script src="{% static 'app/js/myscript.js' %}"></script>
+  <script src="{% static 'app/js/notification.js' %}"></script>
 </body>
 
 </html>
