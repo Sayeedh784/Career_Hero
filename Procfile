@@ -1,0 +1,1 @@
+web: gunicorn carrierHero.wsgi --log-file -
