@@ -47,7 +47,7 @@
                 {{ form | crispy }}
         
                
-                <input type="hidden" name="next" value="{{request.GET.next}}">
+                <input type="hidden" name="next" value="{{ next }}" />
               
                 <input type="submit" class="btn my-3" style="border: 2px solid white; color:white; width: 100px;" value="Login">
             
